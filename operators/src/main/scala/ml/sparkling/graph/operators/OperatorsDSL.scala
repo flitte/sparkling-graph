@@ -4,16 +4,18 @@ import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.
 import ml.sparkling.graph.api.operators.measures.{EdgeMeasure, VertexMeasureConfiguration}
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN._
 import ml.sparkling.graph.operators.algorithms.link.BasicLinkPredictor
-import ml.sparkling.graph.operators.measures.edge.{CommonNeighbours, AdamicAdar}
+import ml.sparkling.graph.operators.measures.edge.{AdamicAdar, CommonNeighbours}
 import ml.sparkling.graph.operators.measures.vertex.{Degree, NeighborhoodConnectivity, VertexEmbeddedness}
 import ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering
-import ml.sparkling.graph.operators.measures.graph.{Modularity, FreemanCentrality}
+import ml.sparkling.graph.operators.measures.graph.{FreemanCentrality, Modularity}
 import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning._
 import ml.sparkling.graph.operators.measures.vertex.closenes.Closeness
 import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality
 import ml.sparkling.graph.operators.measures.vertex.hits.Hits
+import ml.sparkling.graph.operators.measures.vertex.katz.KatzCentrality
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
+
 import scala.reflect.ClassTag
 
 /**
@@ -34,6 +36,9 @@ object OperatorsDSL {
 
     def eigenvectorCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       EigenvectorCentrality.compute(graph,vertexMeasureConfiguration)
+
+    def katzCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
+      KatzCentrality.compute(graph,vertexMeasureConfiguration)
 
     def hits(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       Hits.compute(graph,vertexMeasureConfiguration)
